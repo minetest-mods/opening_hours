@@ -71,7 +71,7 @@ local function send_message(hour, minute)
     end
     message.status.open = false
   end
-  if opening.hours[hour+1] == false then
+  if opening.hours[hour+1] ~= true then
     if minute + 1 > 59 then
       if message.status.min1 then
         minetest.chat_send_all(minetest.colorize("red", message.countdown_pre.." 1 "..message.countdown_post))

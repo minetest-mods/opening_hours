@@ -47,7 +47,7 @@ message.open = minetest.settings:get("opening_hours_open") or "We're open!"
 
 message.status = {
   open = true,
-  closing = true,
+  closing = false,
   min1 = true,
   min5 = true,
   min10 = true,

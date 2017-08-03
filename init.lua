@@ -64,11 +64,13 @@ end
 
 local function send_message(hour, minute)
   if message.status.open then
-    if matrix.connected ~= nil and true then
+    if matrix.connected ~= nil and matrix.connected then
       matrix.say(message.open)
-    else
-      minetest.chat_send_all(message.open)
     end
+    if irc.connected ~= nil and irc.connected then
+  		irc.say(message.open)
+    end
+    minetest.chat_send_all(message.open)
     message.status.open = false
   end
   if opening.hours[hour+1] ~= true then
@@ -126,9 +128,11 @@ minetest.register_globalstep(function(dtime)
       if message.status.closing then
         if matrix.connected ~= nil and true then
           matrix.say(message.close)
-        else
-          minetest.chat_send_all(message.closing)
         end
+        if irc.connected ~= nil and irc.connected then
+      		irc.say(message.open)
+        end
+        minetest.chat_send_all(message.closing)
         message.status.closing = false
       end
       message.status.open = true

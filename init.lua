@@ -2,9 +2,9 @@ local opening = {
   days = {
     [0] = true, -- Sunday
     [1] = false, -- Monday
-    [2] = false, -- Tuesday
+    [2] = true, -- Tuesday
     [3] = false, -- Wednsday
-    [4] = false, -- Thursday
+    [4] = true, -- Thursday
     [5] = false, -- Friday
     [6] = false, -- Saturday
   },
@@ -31,7 +31,7 @@ local opening = {
     [19] = true,
     [20] = true,
     [21] = true,
-    [22] = true,
+    [22] = false,
     [23] = false,
   },
 }

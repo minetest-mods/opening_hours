@@ -74,7 +74,7 @@ local function send_message(hour, minute)
   if opening.hours[hour+1] ~= true then
     if minute + 1 > 59 then
       if message.status.min1 then
-        minetest.chat_send_all(minetest.colorize("red", message.countdown_pre.." 1 "..message.countdown_post))
+        minetest.chat_send_all(minetest.colorize("orangered", message.countdown_pre.." 1 "..message.countdown_post))
         message.status.min1 = false
       end
     elseif minute + 5 > 59 then
@@ -84,12 +84,12 @@ local function send_message(hour, minute)
       end
     elseif minute + 10 > 59 then
       if message.status.min10 then
-        minetest.chat_send_all(minetest.colorize("yellow", message.countdown_pre.." 10 "..message.countdown_post_plural))
+        minetest.chat_send_all(minetest.colorize("greenyellow", message.countdown_pre.." 10 "..message.countdown_post_plural))
         message.status.min10 = false
       end
     elseif minute + 15 > 59 then
       if message.status.min15 then
-        minetest.chat_send_all(minetest.colorize("blue", message.countdown_pre.." 15 "..message.countdown_post_plural))
+        minetest.chat_send_all(minetest.colorize("lightblue", message.countdown_pre.." 15 "..message.countdown_post_plural))
         message.status.min15 = false
       end
     end

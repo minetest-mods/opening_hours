@@ -1,5 +1,5 @@
 # Opening hours
-License: LGPLv3
+License: LGPLv2.1
 
 ## Description
 Limits the days and hours a server is open to players. It has no dependencies. It supports irc and matrix.

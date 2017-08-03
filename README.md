@@ -10,6 +10,7 @@ Limits the days and hours a server is open to players.
 - Kicks players when opening hours are over
 - Warns players of closing 15, 10, 5 and 1 minute in advance
 - Always allows admin, singleplayer and players with `server` privilege to join and stay
+- Allows language strings to be set in global settings
 
 ## Known issues
 - Opening times can't be set by global settings, code edits required

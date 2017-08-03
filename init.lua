@@ -31,20 +31,23 @@ local opening = {
     [19] = true,
     [20] = true,
     [21] = true,
-    [22] = false,
+    [22] = true,
     [23] = false,
   },
 }
 
-local message = {
-  closing = "We're closing!",
-  closed = "We're closed!",
-  countdown_pre = "Closing in",
-  countdown_post = "minute.",
-  countdown_post_plural = "minutes.",
-}
+local message = {}
 
-local warning = {
+message.closing = minetest.settings:get("opening_hours_closing") or "We're closing!"
+message.closed = minetest.settings:get("opening_hours_closed") or "We're closed!"
+message.countdown_pre = minetest.settings:get("opening_hours_countdown_pre") or "Closing in"
+message.countdown_post = minetest.settings:get("opening_hours_countdown_post") or "minute."
+message.countdown_post_plural = minetest.settings:get("opening_hours_countdown_post_plural") or "minutes."
+message.open = minetest.settings:get("opening_hours_open") or "We're open!"
+
+message.status = {
+  open = true,
+  closing = true,
   min1 = true,
   min5 = true,
   min10 = true,
@@ -59,26 +62,36 @@ local function super_user(name)
   end
 end
 
-local function warnings(minutes)
-  if minutes + 1 > 59 then
-    if warning.min1 then
-      minetest.chat_send_all(minetest.colorize("red", message.countdown_pre.." 1 "..message.countdown_post))
-      warning.min1 = false
+local function send_message(hour, minute)
+  if message.status.open then
+    if matrix.connected ~= nil and true then
+      matrix.say(message.open)
+    else
+      minetest.chat_send_all(message.open)
     end
-  elseif minutes + 5 > 59 then
-    if warning.min5 then
-      minetest.chat_send_all(minetest.colorize("orange", message.countdown_pre.." 5 "..message.countdown_post_plural))
-      warning.min5 = false
-    end
-  elseif minutes + 10 > 59 then
-    if warning.min10 then
-      minetest.chat_send_all(minetest.colorize("yellow", message.countdown_pre.." 10 "..message.countdown_post_plural))
-      warning.min10 = false
-    end
-  elseif minutes + 15 > 59 then
-    if warning.min15 then
-      minetest.chat_send_all(minetest.colorize("blue", message.countdown_pre.." 15 "..message.countdown_post_plural))
-      warning.min15 = false
+    message.status.open = false
+  end
+  if opening.hours[hour+1] == false then
+    if minute + 1 > 59 then
+      if message.status.min1 then
+        minetest.chat_send_all(minetest.colorize("red", message.countdown_pre.." 1 "..message.countdown_post))
+        message.status.min1 = false
+      end
+    elseif minute + 5 > 59 then
+      if message.status.min5 then
+        minetest.chat_send_all(minetest.colorize("orange", message.countdown_pre.." 5 "..message.countdown_post_plural))
+        message.status.min5 = false
+      end
+    elseif minute + 10 > 59 then
+      if message.status.min10 then
+        minetest.chat_send_all(minetest.colorize("yellow", message.countdown_pre.." 10 "..message.countdown_post_plural))
+        message.status.min10 = false
+      end
+    elseif minute + 15 > 59 then
+      if message.status.min15 then
+        minetest.chat_send_all(minetest.colorize("blue", message.countdown_pre.." 15 "..message.countdown_post_plural))
+        message.status.min15 = false
+      end
     end
   end
 end
@@ -99,9 +112,10 @@ minetest.register_globalstep(function(dtime)
   if timer > 10 then
     local day = tonumber(os.date("%w"))
     local hour = tonumber(os.date("%H"))
-    local minutes = tonumber(os.date("%M"))
+    local minute = tonumber(os.date("%M"))
     if opening.days[day] == true and opening.hours[hour] == true then
-      warnings(minutes)
+      send_message(hour, minute)
+      message.status.close = true
     else
       for _,player in ipairs(minetest.get_connected_players()) do
         local name = player:get_player_name()
@@ -109,6 +123,15 @@ minetest.register_globalstep(function(dtime)
           minetest.kick_player(name, message.closing)
         end
       end
+      if message.status.closing then
+        if matrix.connected ~= nil and true then
+          matrix.say(message.close)
+        else
+          minetest.chat_send_all(message.closing)
+        end
+        message.status.closing = false
+      end
+      message.status.open = true
     end
     timer = 0
   end

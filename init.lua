@@ -117,7 +117,7 @@ minetest.register_globalstep(function(dtime)
     local minute = tonumber(os.date("%M"))
     if opening.days[day] == true and opening.hours[hour] == true then
       send_message(hour, minute)
-      message.status.close = true
+      message.status.closing = true
     else
       for _,player in ipairs(minetest.get_connected_players()) do
         local name = player:get_player_name()

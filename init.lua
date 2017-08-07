@@ -64,10 +64,10 @@ end
 
 local function send_message(hour, minute)
   if message.status.open then
-    if matrix.connected ~= nil and matrix.connected then
+    if minetest.get_modpath("matrix") ~= nil and matrix.connected then
       matrix.say(message.open)
     end
-    if irc.connected ~= nil and irc.connected then
+    if minetest.get_modpath("irc") ~= nil and irc.connected then
   		irc.say(message.open)
     end
     minetest.chat_send_all(message.open)

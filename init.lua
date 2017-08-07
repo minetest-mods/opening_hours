@@ -46,7 +46,7 @@ message.countdown_post_plural = minetest.settings:get("opening_hours_countdown_p
 message.open = minetest.settings:get("opening_hours_open") or "We're open!"
 
 message.status = {
-  open = false,
+  open = true,
   closing = false,
   min1 = true,
   min5 = true,

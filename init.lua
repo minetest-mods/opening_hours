@@ -126,10 +126,10 @@ minetest.register_globalstep(function(dtime)
         end
       end
       if message.status.closing then
-        if matrix.connected ~= nil and true then
+        if minetest.get_modpath("matrix") ~= nil and matrix.connected then
           matrix.say(message.closing)
         end
-        if irc.connected ~= nil and irc.connected then
+        if minetest.get_modpath("irc") ~= nil and irc.connected then
       		irc.say(message.open)
         end
         minetest.chat_send_all(message.closing)

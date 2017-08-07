@@ -127,7 +127,7 @@ minetest.register_globalstep(function(dtime)
       end
       if message.status.closing then
         if matrix.connected ~= nil and true then
-          matrix.say(message.close)
+          matrix.say(message.closing)
         end
         if irc.connected ~= nil and irc.connected then
       		irc.say(message.open)
@@ -136,6 +136,10 @@ minetest.register_globalstep(function(dtime)
         message.status.closing = false
       end
       message.status.open = true
+      message.status.min1 = true
+      message.status.min5 = true
+      message.status.min10 = true
+      message.status.min15 = true
     end
     timer = 0
   end

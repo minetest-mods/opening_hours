@@ -65,7 +65,7 @@ end
 local function send_message(hour, minute)
   if message_status.open == true then
     message_status.open = false
-    if minetest.get_modpath("matrix") ~= nil and matrix.connected then
+    if minetest.get_modpath("matrix_chat") ~= nil and matrix.connected then
       matrix.say(message.open)
     end
     if minetest.get_modpath("irc") ~= nil and irc.connected then
@@ -126,7 +126,7 @@ minetest.register_globalstep(function(dtime)
         end
       end
       if message_status.closing then
-        if minetest.get_modpath("matrix") ~= nil and matrix.connected then
+        if minetest.get_modpath("matrix_chat") ~= nil and matrix.connected then
           matrix.say(message.closing)
         end
         if minetest.get_modpath("irc") ~= nil and irc.connected then

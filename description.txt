@@ -1,1 +1,0 @@
-Limits the days and hours a server is open to players.

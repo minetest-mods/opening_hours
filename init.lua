@@ -38,12 +38,12 @@ local opening = {
 
 local message = {}
 
-message.closing = minetest.settings:get("opening_hours_closing") or "We're closing!"
-message.closed = minetest.settings:get("opening_hours_closed") or "We're closed!"
-message.countdown_pre = minetest.settings:get("opening_hours_countdown_pre") or "Closing in"
-message.countdown_post = minetest.settings:get("opening_hours_countdown_post") or "minute."
-message.countdown_post_plural = minetest.settings:get("opening_hours_countdown_post_plural") or "minutes."
-message.open = minetest.settings:get("opening_hours_open") or "We're open!"
+message.closing = core.settings:get("opening_hours_closing") or "We're closing!"
+message.closed = core.settings:get("opening_hours_closed") or "We're closed!"
+message.countdown_pre = core.settings:get("opening_hours_countdown_pre") or "Closing in"
+message.countdown_post = core.settings:get("opening_hours_countdown_post") or "minute."
+message.countdown_post_plural = core.settings:get("opening_hours_countdown_post_plural") or "minutes."
+message.open = core.settings:get("opening_hours_open") or "We're open!"
 
 local message_status = {
   open = true,
@@ -55,7 +55,7 @@ local message_status = {
 }
 
 local function super_user(name)
-  if name == "singleplayer" or name == admin or minetest.check_player_privs(name, {server=true}) then
+  if name == "singleplayer" or name == admin or core.check_player_privs(name, {server=true}) then
     return true
   else
     return false
@@ -65,40 +65,40 @@ end
 local function send_message(hour, minute)
   if message_status.open == true then
     message_status.open = false
-    if minetest.get_modpath("matrix_chat") ~= nil and matrix.connected then
+    if core.get_modpath("matrix_chat") ~= nil and matrix.connected then
       matrix.say(message.open)
     end
-    if minetest.get_modpath("irc") ~= nil and irc.connected then
+    if core.get_modpath("irc") ~= nil and irc.connected then
   		irc.say(message.open)
     end
-    minetest.chat_send_all(message.open)
+    core.chat_send_all(message.open)
   end
   if opening.hours[hour+1] ~= true then
     if minute + 1 > 59 then
       if message_status.min1 then
-        minetest.chat_send_all(minetest.colorize("orangered", message.countdown_pre.." 1 "..message.countdown_post))
+        core.chat_send_all(core.colorize("orangered", message.countdown_pre.." 1 "..message.countdown_post))
         message_status.min1 = false
       end
     elseif minute + 5 > 59 then
       if message_status.min5 then
-        minetest.chat_send_all(minetest.colorize("orange", message.countdown_pre.." 5 "..message.countdown_post_plural))
+        core.chat_send_all(core.colorize("orange", message.countdown_pre.." 5 "..message.countdown_post_plural))
         message_status.min5 = false
       end
     elseif minute + 10 > 59 then
       if message_status.min10 then
-        minetest.chat_send_all(minetest.colorize("greenyellow", message.countdown_pre.." 10 "..message.countdown_post_plural))
+        core.chat_send_all(core.colorize("greenyellow", message.countdown_pre.." 10 "..message.countdown_post_plural))
         message_status.min10 = false
       end
     elseif minute + 15 > 59 then
       if message_status.min15 then
-        minetest.chat_send_all(minetest.colorize("lightblue", message.countdown_pre.." 15 "..message.countdown_post_plural))
+        core.chat_send_all(core.colorize("lightblue", message.countdown_pre.." 15 "..message.countdown_post_plural))
         message_status.min15 = false
       end
     end
   end
 end
 
-minetest.register_on_prejoinplayer(function(name, ip)
+core.register_on_prejoinplayer(function(name, ip)
   local day = tonumber(os.date("%w"))
   local hour = tonumber(os.date("%H"))
   if opening.days[day] == true and opening.hours[hour] == true or super_user(name) then
@@ -109,7 +109,7 @@ minetest.register_on_prejoinplayer(function(name, ip)
 end)
 
 local timer = 0
-minetest.register_globalstep(function(dtime)
+core.register_globalstep(function(dtime)
   timer = timer + dtime
   if timer > 10 then
     local day = tonumber(os.date("%w"))
@@ -119,20 +119,20 @@ minetest.register_globalstep(function(dtime)
       send_message(hour, minute)
       message_status.closing = true
     else
-      for _,player in ipairs(minetest.get_connected_players()) do
+      for _,player in ipairs(core.get_connected_players()) do
         local name = player:get_player_name()
         if not super_user(name) then
-          minetest.kick_player(name, message.closing)
+          core.kick_player(name, message.closing)
         end
       end
       if message_status.closing then
-        if minetest.get_modpath("matrix_chat") ~= nil and matrix.connected then
+        if core.get_modpath("matrix_chat") ~= nil and matrix.connected then
           matrix.say(message.closing)
         end
-        if minetest.get_modpath("irc") ~= nil and irc.connected then
+        if core.get_modpath("irc") ~= nil and irc.connected then
       		irc.say(message.closing)
         end
-        minetest.chat_send_all(message.closing)
+        core.chat_send_all(message.closing)
         message_status.closing = false
       end
       message_status.open = true

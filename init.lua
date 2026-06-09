@@ -36,14 +36,16 @@ local opening = {
   },
 }
 
+local S = core.get_translator("opening_hours")
+
 local message = {}
 
-message.closing = core.settings:get("opening_hours_closing") or "We're closing!"
-message.closed = core.settings:get("opening_hours_closed") or "We're closed!"
-message.countdown_pre = core.settings:get("opening_hours_countdown_pre") or "Closing in"
-message.countdown_post = core.settings:get("opening_hours_countdown_post") or "minute."
-message.countdown_post_plural = core.settings:get("opening_hours_countdown_post_plural") or "minutes."
-message.open = core.settings:get("opening_hours_open") or "We're open!"
+message.closing = core.settings:get("opening_hours_closing") or S("We're closing!")
+message.closed = core.settings:get("opening_hours_closed") or S("We're closed!")
+message.countdown_pre = core.settings:get("opening_hours_countdown_pre") or S("Closing in")
+message.countdown_post = core.settings:get("opening_hours_countdown_post") or S("minute.")
+message.countdown_post_plural = core.settings:get("opening_hours_countdown_post_plural") or S("minutes.")
+message.open = core.settings:get("opening_hours_open") or S("We're open!")
 
 local message_status = {
   open = true,

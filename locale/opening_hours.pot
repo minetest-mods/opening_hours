@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 16:37-0500\n"
+"POT-Creation-Date: 2026-06-20 08:35-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: init.lua:43
 msgid "We're closing!"
@@ -25,18 +26,12 @@ msgstr ""
 msgid "We're closed!"
 msgstr ""
 
-#: init.lua:45
-msgid "Closing in"
-msgstr ""
-
-#: init.lua:46
-msgid "minute."
-msgstr ""
-
-#: init.lua:47
-msgid "minutes."
-msgstr ""
-
 #: init.lua:48
+msgid "Closing in @1 minute."
+msgid_plural "Closing in @1 minutes."
+msgstr[0] ""
+msgstr[1] ""
+
+#: init.lua:54
 msgid "We're open!"
 msgstr ""

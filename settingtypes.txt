@@ -1,0 +1,11 @@
+# Message to be sent at closing time
+opening_hours_closing (Closing Message) string We're closing!
+
+# Message sent during closed hours
+opening_hours_closed (Closed Message) string We're closed!
+
+# Message sent for countdown
+opening_hours_countdown (Countdown Message) string
+
+# Message to be sent at opening time
+opening_hours_open (Opening Message) string We're open!

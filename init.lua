@@ -43,13 +43,9 @@ local message = {}
 message.closing = core.settings:get("opening_hours_closing") or S("We're closing!")
 message.closed = core.settings:get("opening_hours_closed") or S("We're closed!")
 function message.countdown(min)
-  if min then
-    local msg = core.settings:get("opening_hours_countdown") or
-      PS("Closing in @1 minute.", "Closing in @1 minutes.", min, tostring(min))
-    return msg
-  else
-    return false
-  end
+  assert(min)
+  return core.settings:get("opening_hours_countdown") or
+    PS("Closing in @1 minute.", "Closing in @1 minutes.", min, tostring(min))
 end
 message.open = core.settings:get("opening_hours_open") or S("We're open!")
 

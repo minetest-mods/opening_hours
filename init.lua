@@ -36,14 +36,18 @@ local opening = {
   },
 }
 
+local S, PS = core.get_translator("opening_hours")
+
 local message = {}
 
-message.closing = core.settings:get("opening_hours_closing") or "We're closing!"
-message.closed = core.settings:get("opening_hours_closed") or "We're closed!"
-message.countdown_pre = core.settings:get("opening_hours_countdown_pre") or "Closing in"
-message.countdown_post = core.settings:get("opening_hours_countdown_post") or "minute."
-message.countdown_post_plural = core.settings:get("opening_hours_countdown_post_plural") or "minutes."
-message.open = core.settings:get("opening_hours_open") or "We're open!"
+message.closing = core.settings:get("opening_hours_closing") or S("We're closing!")
+message.closed = core.settings:get("opening_hours_closed") or S("We're closed!")
+function message.countdown(min)
+  assert(min)
+  return core.settings:get("opening_hours_countdown") or
+    PS("Closing in @1 minute.", "Closing in @1 minutes.", min, tostring(min))
+end
+message.open = core.settings:get("opening_hours_open") or S("We're open!")
 
 local message_status = {
   open = true,
@@ -76,22 +80,22 @@ local function send_message(hour, minute)
   if opening.hours[hour+1] ~= true then
     if minute + 1 > 59 then
       if message_status.min1 then
-        core.chat_send_all(core.colorize("orangered", message.countdown_pre.." 1 "..message.countdown_post))
+        core.chat_send_all(core.colorize("orangered", message.countdown(1)))
         message_status.min1 = false
       end
     elseif minute + 5 > 59 then
       if message_status.min5 then
-        core.chat_send_all(core.colorize("orange", message.countdown_pre.." 5 "..message.countdown_post_plural))
+        core.chat_send_all(core.colorize("orange", message.countdown(5)))
         message_status.min5 = false
       end
     elseif minute + 10 > 59 then
       if message_status.min10 then
-        core.chat_send_all(core.colorize("greenyellow", message.countdown_pre.." 10 "..message.countdown_post_plural))
+        core.chat_send_all(core.colorize("greenyellow", message.countdown(10)))
         message_status.min10 = false
       end
     elseif minute + 15 > 59 then
       if message_status.min15 then
-        core.chat_send_all(core.colorize("lightblue", message.countdown_pre.." 15 "..message.countdown_post_plural))
+        core.chat_send_all(core.colorize("lightblue", message.countdown(15)))
         message_status.min15 = false
       end
     end

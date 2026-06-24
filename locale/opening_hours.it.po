@@ -1,0 +1,36 @@
+# Italian translations for PACKAGE package.
+# Copyright (C) 2026 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-20 08:35-0500\n"
+"PO-Revision-Date: 2026-06-20 08:35-0500\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: init.lua:43
+msgid "We're closing!"
+msgstr "Stiamo chiudendo!"
+
+#: init.lua:44
+msgid "We're closed!"
+msgstr "Siamo chiusi!"
+
+#: init.lua:48
+msgid "Closing in @1 minute."
+msgid_plural "Closing in @1 minutes."
+msgstr[0] "Chiude in @1 minuto."
+msgstr[1] "Chiude in @1 minuti."
+
+#: init.lua:54
+msgid "We're open!"
+msgstr "Siamo aperti!"
